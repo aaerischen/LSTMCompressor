@@ -17,5 +17,5 @@ python fix\main.py
 ```
 
 ## Reference for an arithmetic coder (check their website): 
-https://github.com/nayuki/Reference-arithmetic-coding 
+https://github.com/nayuki/Reference-arithmetic-coding <br />
 https://www.nayuki.io/page/reference-arithmetic-coding
