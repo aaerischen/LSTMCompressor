@@ -1,6 +1,5 @@
 import tensorflow as tf
 from tensorflow import keras 
-import torch
 import numpy as np
 import random
 import time
@@ -14,11 +13,11 @@ from ArithmeticCoder import ArithmeticEncoder, ArithmeticDecoder, BitOutputStrea
 os.environ['TF_DETERMINISTIC_OPS'] = '1'
 
 batch_size = 512 # 256
-seq_length = 12 # 16
-rnn_units = 128 # 256
+seq_length = 4 # 16
+rnn_units = 512 # 256
 num_layers = 1 # 2
-embedding_size = 192 # 256
-start_learning_rate = 0.005 #initial
+embedding_size = 512 # 256
+start_learning_rate = 0.01 # 0.005
 end_learning_rate = 0.001 #initial
 mode = 'both'
 
@@ -35,16 +34,14 @@ def build_model(vocab_size: int) -> tf.keras.Model:
     for i in range(num_layers):
         return_seq = True if i != num_layers - 1 else False
         x = tf.keras.layers.GRU(rnn_units,
-                                 dropout = 0.1,
                                  return_sequences = return_seq,
-                                 stateful = True,
                                  recurrent_initializer = 'glorot_uniform'
                                  )(x)
     dense = tf.keras.layers.Dense(vocab_size, 
                                   name='dense_logits'
                                   )(x)
-    output = tf.keras.layers.Activation('softmax', 
-                                        dtype='float32', 
+    output = tf.keras.layers.Activation('softmax',
+                                        dtype = 'float32', 
                                         name='predictions'
                                         )(dense)
     model = tf.keras.Model(inputs=inputs, 
